@@ -5,7 +5,6 @@ dist/*
 token.txt
 .env
 locals
-*.zip
 
 import
 .terraform

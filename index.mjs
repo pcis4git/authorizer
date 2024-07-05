@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
-let OIDC_URL="https://login.pst.oneidfederation.ehealthontario.ca/sso/oauth2/realms/root/realms/idaaspstoidc/.well-known/openid-configuration";
+//let OIDC_URL="https://login.pst.oneidfederation.ehealthontario.ca/sso/oauth2/realms/root/realms/idaaspstoidc/.well-known/openid-configuration";
 let jwks = null;
 let lastJWKSFetchTime = 0;
 const jwks_ttl = 1000 * 60 * 60 * 12; // 12 hours
