@@ -33,7 +33,12 @@ resource "aws_iam_role_policy_attachment" "lambda_execution_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"                
 }
 
-resource "aws_lambda_function" "my_lambda" {
+resource "aws_cloudwatch_log_group" "authorizer_lambda_log_group" {
+  name = "/aws/lambda/oag-authorizer-lambda"
+  retention_in_days = 14
+}
+
+resource "aws_lambda_function" "authorizer_lambda" {
   function_name = "oag-authorizer-lambda"
   handler       = "index.handler"
   runtime       = "nodejs20.x"
@@ -43,6 +48,13 @@ resource "aws_lambda_function" "my_lambda" {
   environment {
     variables = {
       OIDC_URL = var.oidc_url
+      EXPIRED_TOKEN_EXEMPTED = var.expiredTokenExempted
     }
-  }  
+  }
+
+  logging_config {
+    log_group = aws_cloudwatch_log_group.authorizer_lambda_log_group.name
+    log_format = "JSON"
+    system_log_level = "DEBUG"
+  }
 }
